@@ -1,14 +1,13 @@
-import 'package:fashion_wave/auth/ui/sign_up.dart';
 import 'package:flutter/material.dart';
 
-class LogInScreen extends StatefulWidget {
-  const LogInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LogInScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LogInScreen> {
+class SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +82,7 @@ class _LoginScreenState extends State<LogInScreen> {
                   ),
                   child: const Center(
                       child: Text(
-                    'LogIn',
+                    'SignUp',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -97,7 +96,7 @@ class _LoginScreenState extends State<LogInScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Don't have an account?",
+                      "Already have an account?",
                       style: TextStyle(color: Colors.white),
                     ),
                     const SizedBox(
@@ -105,14 +104,10 @@ class _LoginScreenState extends State<LogInScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SignUpScreen(),
-                            ));
+                        Navigator.pop(context);
                       },
                       child: const Text(
-                        'SignUp',
+                        'LogIn',
                         style: TextStyle(color: Colors.red,fontSize: 16),
                       ),
                     )
