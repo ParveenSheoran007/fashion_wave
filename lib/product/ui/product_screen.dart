@@ -1,25 +1,8 @@
-import 'package:fashion_wave/product/ui/widget/custtom_buttom_bar.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const ProductScreen(),
-    );
-  }
-}
+import 'package:fashion_wave/product/ui/profile_screen.dart';
+import 'package:fashion_wave/product/ui/widget/custtom_buttom_bar.dart';
+import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -32,6 +15,7 @@ class _ProductScreenState extends State<ProductScreen> {
   final PageController pageController = PageController();
   int currentPage = 0;
   late Timer timer;
+
 
   @override
   void initState() {
@@ -73,7 +57,7 @@ class _ProductScreenState extends State<ProductScreen> {
               Container(
                 height: 300,
                 child: PageView(
-                  controller:  pageController,
+                  controller: pageController,
                   children: [
                     Image.network(
                       'https://img.freepik.com/free-psd/sales-banner-template-with-image_23-2148149654.jpg',
@@ -107,8 +91,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                      },
+                      onTap: () {},
                       child: const Text(
                         'View All',
                         style: TextStyle(
@@ -128,7 +111,8 @@ class _ProductScreenState extends State<ProductScreen> {
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 6,
                         mainAxisSpacing: 6,
@@ -138,9 +122,12 @@ class _ProductScreenState extends State<ProductScreen> {
                       itemBuilder: (context, index) {
                         return Container(
                           decoration: BoxDecoration(
-                             border: Border.all(color:Colors.grey.shade300),
+                              border: Border.all(color: Colors.grey.shade300),
                               borderRadius: BorderRadius.circular(14)),
-                          child: Icon(Icons.favorite_outline,color: Colors.grey,),
+                          child: const Icon(
+                            Icons.favorite_outline,
+                            color: Colors.grey,
+                          ),
                         );
                       },
                     ),

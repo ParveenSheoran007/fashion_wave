@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
+class CustomBottomNavigationBar extends Statefu lWidget {
   const CustomBottomNavigationBar({super.key});
 
+  @override
+  State<CustomBottomNavigationBar> createState() => _CustomBottomNavigationBarState();
+}
+
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -13,6 +18,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         topRight: Radius.circular(30.0),
       ),
       child: BottomNavigationBar(
+        onTap: onTabTapped,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(

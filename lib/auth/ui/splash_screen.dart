@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -40,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-// Example HomeScreen for navigation
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,7 @@
-import 'package:fashion_wave/auth/ui/sign_up.dart';
+import 'package:fashion_wave/product/ui/product_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'sign_up.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -9,8 +11,13 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LogInScreen> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    // final UserProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -31,13 +38,14 @@ class _LoginScreenState extends State<LogInScreen> {
               children: [
                 Center(
                     child: Image.asset(
-                  'assets/Screenshot_2024-07-17_123441-removebg-preview.png',
-                  width: 200,
-                )),
+                      'assets/Screenshot_2024-07-17_123441-removebg-preview.png',
+                      width: 200,
+                    )),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
+                  controller: _usernameController,
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -54,6 +62,7 @@ class _LoginScreenState extends State<LogInScreen> {
                   height: 14,
                 ),
                 TextFormField(
+                  controller: _passwordController,
                   cursorColor: Colors.white,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -74,22 +83,37 @@ class _LoginScreenState extends State<LogInScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: Colors.red.shade400,
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: const Center(
-                      child: Text(
-                    'LogIn',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  )),
-                ),
+                // GestureDetector(
+                //   onTap: loginProvider.isLoading
+                //       ? null
+                //       : () {
+                //     loginProvider.login(
+                //       _usernameController.text,
+                //       _passwordController.text,
+                //       context,
+                //     );
+                //   },
+                //   child: Container(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: 44,
+                //     decoration: BoxDecoration(
+                //       color: Colors.red.shade400,
+                //       borderRadius: BorderRadius.circular(40),
+                //     ),
+                //     child: Center(
+                //         child: loginProvider.isLoading
+                //             ? const CircularProgressIndicator(
+                //           color: Colors.white,
+                //         )
+                //             : const Text(
+                //           'LogIn',
+                //           style: TextStyle(
+                //               color: Colors.white,
+                //               fontSize: 20,
+                //               fontWeight: FontWeight.bold),
+                //         )),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 14,
                 ),
@@ -108,12 +132,12 @@ class _LoginScreenState extends State<LogInScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SignUpScreen(),
+                              builder: (context) => const ProductScreen(),
                             ));
                       },
                       child: const Text(
                         'SignUp',
-                        style: TextStyle(color: Colors.red,fontSize: 16),
+                        style: TextStyle(color: Colors.red, fontSize: 16),
                       ),
                     )
                   ],
