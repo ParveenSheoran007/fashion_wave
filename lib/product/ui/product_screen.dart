@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:fashion_wave/product/ui/profile_screen.dart';
 import 'package:fashion_wave/product/ui/widget/custtom_buttom_bar.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ class _ProductScreenState extends State<ProductScreen> {
   final PageController pageController = PageController();
   int currentPage = 0;
   late Timer timer;
-
 
   @override
   void initState() {
@@ -112,7 +110,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 6,
                         mainAxisSpacing: 6,

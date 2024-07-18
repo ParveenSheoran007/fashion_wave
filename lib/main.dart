@@ -1,29 +1,31 @@
-import 'package:flutter/material.dart';
+import 'package:fashion_wave/auth/provider/user_providr.dart';
 import 'package:fashion_wave/auth/ui/login_screen.dart';
-import 'package:fashion_wave/product/ui/product_screen.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Fashion Wave',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home:  const LogInScreen(),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const LogInScreen(),
-        '/product': (context) => const ProductScreen(),
-      },
     );
   }
 }

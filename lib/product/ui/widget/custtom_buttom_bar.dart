@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomBottomNavigationBar extends Statefu lWidget {
+class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({super.key});
 
   @override
@@ -18,7 +18,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         topRight: Radius.circular(30.0),
       ),
       child: BottomNavigationBar(
-        onTap: onTabTapped,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
