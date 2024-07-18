@@ -14,8 +14,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 6), () {
-      Get.to(() => HomeScreen());
+    Timer(const Duration(seconds: 3), () {
+      Get.off(HomeScreen());
     });
   }
 
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Expanded(
             child: Container(
-              width: MediaQuery.of(context).size.width,
+              width: Get.width,
               alignment: Alignment.center,
               child: Lottie.asset('assets/splash-icon (1).json'),
             ),
@@ -42,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
+// Example HomeScreen for navigation
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

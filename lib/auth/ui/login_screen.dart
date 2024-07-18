@@ -1,9 +1,5 @@
-import 'package:fashion_wave/auth/provider/user_providr.dart';
 import 'package:fashion_wave/auth/ui/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:fashion_wave/auth/model/user_model.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -13,46 +9,6 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LogInScreen> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  Future<void> _login(BuildContext context) async {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final user = UserModel(
-      username: usernameController.text,
-      password: passwordController.text,
-    );
-
-    try {
-      await authProvider.login(user);
-      if (authProvider.isAuthenticated) {
-        Fluttertoast.showToast(
-          msg: "Login successful",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-        );
-      } else {
-        Fluttertoast.showToast(
-          msg: "Login failed: Incorrect username or password",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        );
-      }
-    } catch (error) {
-      Fluttertoast.showToast(
-        msg: "Login error: ${error.toString()}",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,14 +31,13 @@ class _LoginScreenState extends State<LogInScreen> {
               children: [
                 Center(
                     child: Image.asset(
-                      'assets/Screenshot_2024-07-17_123441-removebg-preview.png',
-                      width: 200,
-                    )),
+                  'assets/Screenshot_2024-07-17_123441-removebg-preview.png',
+                  width: 200,
+                )),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
-                  controller: usernameController,
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -99,7 +54,6 @@ class _LoginScreenState extends State<LogInScreen> {
                   height: 14,
                 ),
                 TextFormField(
-                  controller: passwordController,
                   cursorColor: Colors.white,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -120,24 +74,21 @@ class _LoginScreenState extends State<LogInScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                InkWell(
-                  onTap: () => _login(context),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: Colors.red.shade400,
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: const Center(
-                        child: Text(
-                          'LogIn',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        )),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade400,
+                    borderRadius: BorderRadius.circular(40),
                   ),
+                  child: const Center(
+                      child: Text(
+                    'LogIn',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  )),
                 ),
                 const SizedBox(
                   height: 14,
@@ -162,7 +113,7 @@ class _LoginScreenState extends State<LogInScreen> {
                       },
                       child: const Text(
                         'SignUp',
-                        style: TextStyle(color: Colors.red, fontSize: 16),
+                        style: TextStyle(color: Colors.red,fontSize: 16),
                       ),
                     )
                   ],
