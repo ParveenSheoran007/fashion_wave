@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:fashion_wave/auth/model/user_model.dart';
 import 'package:http/http.dart' as http;
 
-class ApiService {
+class UserService {
   final String baseUrl = 'http://localhost:3000/api';
 
   Future<Map<String, dynamic>?> login(UserModel user) async {
