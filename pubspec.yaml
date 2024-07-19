@@ -30,16 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.2
-  provider: ^6.1.2
-  fluttertoast: ^8.0.9
-  lottie: ^3.1.2
-  get: ^4.6.6
-  font_awesome_flutter: ^10.1.0
-  flutter_pannable_rating_bar: ^2.7.2+1
-  image_picker: ^1.1.2
-  shared_preferences: ^2.2.3
-  flutter_rating_bar: ^4.0.0
+
 
 
 
