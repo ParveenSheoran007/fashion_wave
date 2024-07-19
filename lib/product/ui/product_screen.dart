@@ -16,6 +16,7 @@ class _ProductScreenState extends State<ProductScreen> {
   int currentPage = 0;
   late Timer timer;
 
+
   @override
   void initState() {
     super.initState();
