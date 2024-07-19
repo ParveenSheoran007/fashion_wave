@@ -1,95 +1,54 @@
+import 'package:fashion_wave/product/ui/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:fashion_wave/product/model/product_model.dart';
 import 'package:fashion_wave/product/service/product_service.dart';
 
 class ProductProvider with ChangeNotifier {
-  List<ProductModel> pModel = [];
-  bool _isLoading = false;
-  String _errorMessage = '';
+  final ProductService _productService = ProductService();
 
-  List<ProductModel> get products => pModel;
+  List<ProductModel> _products = [];
+  List<CartItem> _cart = [];
+  bool _isLoading = true;
+
+  List<ProductModel> get products => _products;
+  List<CartItem> get cart => _cart;
   bool get isLoading => _isLoading;
-  String get errorMessage => _errorMessage;
+
+  ProductProvider() {
+    fetchProducts();
+  }
 
   Future<void> fetchProducts() async {
-    _isLoading = true;
-    notifyListeners();
     try {
-      pModel = await ProductService.fetchProducts();
-      _errorMessage = '';
+      _products = await _productService.fetchProducts();
+      print('Products loaded: ${_products.length}');
     } catch (e) {
-      _errorMessage = e.toString();
+      print('Error fetching products: $e');
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<void> fetchProduct(String productId) async {
-    _isLoading = true;
+  void incrementCount(ProductModel product) {
+    product.clickCount++;
     notifyListeners();
-    try {
-      ProductModel product = await ProductService.fetchProduct(productId);
-      int index = pModel.indexWhere((p) => p.id == productId);
-      if (index != -1) {
-        pModel[index] = product;
-      } else {
-        pModel.add(product);
-      }
-      _errorMessage = '';
-    } catch (e) {
-      _errorMessage = e.toString();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
   }
 
-  Future<void> addProduct(ProductModel productModel) async {
-    _isLoading = true;
-    notifyListeners();
-    try {
-      String response = await ProductService.addProduct(productModel);
-      pModel.add(productModel);
-      _errorMessage = '';
-    } catch (e) {
-      _errorMessage = e.toString();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
+  void addToCart(ProductModel product, int quantity) {
+    final existingCartItem = _cart.firstWhere(
+          (item) => item.product.id == product.id,
+      orElse: () => CartItem(product: product, quantity: 0),
+    );
 
-  Future<void> updateProduct(String productId, ProductModel productModel) async {
-    _isLoading = true;
-    notifyListeners();
-    try {
-      String response = await ProductService.updateProduct(productId, productModel);
-      int index = pModel.indexWhere((p) => p.id == productId);
-      if (index != -1) {
-        pModel[index] = productModel;
-      }
-      _errorMessage = '';
-    } catch (e) {
-      _errorMessage = e.toString();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
+    if (existingCartItem.quantity == 0) {
+      _cart.add(CartItem(product: product, quantity: quantity));
+    } else {
+      existingCartItem.quantity += quantity;
     }
-  }
 
-  Future<void> deleteProduct(String productId) async {
-    _isLoading = true;
     notifyListeners();
-    try {
-      await ProductService.deleteProduct(productId);
-      pModel.removeWhere((p) => p.id == productId);
-      _errorMessage = '';
-    } catch (e) {
-      _errorMessage = e.toString();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
   }
 }
+
+

@@ -1,7 +1,5 @@
-class ApiEndpoints{
-
+class ApiEndpoints {
   static const String baseUrl = 'http://localhost:3000/api';
-
-  static const String product ='$baseUrl/products';
-
+  static const String product = '$baseUrl/products';
+  static const String category = '$baseUrl/categories';
 }
