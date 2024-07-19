@@ -17,7 +17,6 @@ class UserModel {
       password: map['password'],
     );
   }
-
   @override
   String toString() {
     return 'UserModel{username: $username, password: $password}';
