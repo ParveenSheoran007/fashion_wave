@@ -217,7 +217,7 @@ class SettingScreenState extends State<SettingScreen> {
                         },
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
-                          hintText: 'Old Password',
+                          hintText: 'New Password',
                           hintStyle: TextStyle(color: Colors.black26),
                           border: InputBorder.none,
                         ),
@@ -236,7 +236,7 @@ class SettingScreenState extends State<SettingScreen> {
                         },
                         cursorColor: Colors.black,
                         decoration: const InputDecoration(
-                          hintText: 'Old Password',
+                          hintText: 'Reset New Password',
                           hintStyle: TextStyle(color: Colors.black26),
                           border: InputBorder.none,
                         ),
