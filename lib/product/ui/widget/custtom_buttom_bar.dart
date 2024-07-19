@@ -1,4 +1,5 @@
 import 'package:fashion_wave/product/ui/cart_screen.dart';
+import 'package:fashion_wave/product/ui/product_screen.dart';
 import 'package:fashion_wave/product/ui/profile_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,25 +14,23 @@ class CustomBottomNavigationBar extends StatefulWidget {
 class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   int selectedIndex = 0;
 
+  final List<Widget> _screens = [
+    const ProductScreen(), // Assuming you want to keep the same ProductScreen or update as needed
+    const CartScreen(),
+    // const MyOrderScreen(),
+    // const FavoritesScreen(), // Make sure to create this screen if needed
+    const ProfileScreen(),
+  ];
+
   void _onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
 
-    switch (index) {
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const CartScreen()),
-        );
-        break;
-      case 4:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ProfileScreen()),
-        );
-        break;
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => _screens[index]),
+    );
   }
 
   @override
