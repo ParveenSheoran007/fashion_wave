@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:fashion_wave/product/provider/product_provider.dart';
 import 'package:fashion_wave/product/ui/profile_screen.dart';
+import 'package:fashion_wave/product/ui/view_all-product_list_screen.dart';
 import 'package:fashion_wave/product/ui/widget/custtom_buttom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -101,7 +102,15 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ViewAllProductListScreen(),
+                              ),
+                            );
+
+                          },
                           child: const Text(
                             'View All',
                             style: TextStyle(
@@ -144,6 +153,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 productProvider.incrementCount(product);
                               },
                               child: Container(
+                                padding: EdgeInsets.all(2),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey.shade300),
                                   borderRadius: BorderRadius.circular(14),
@@ -155,7 +165,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       product.name,
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                       ),
                                     ),
                                     const SizedBox(height: 5),
