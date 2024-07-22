@@ -2,6 +2,7 @@ import 'package:fashion_wave/product/ui/cart_screen.dart';
 import 'package:fashion_wave/product/ui/favourate_screen.dart';
 import 'package:fashion_wave/product/ui/my_order-screen.dart';
 import 'package:fashion_wave/product/ui/profile_screen.dart';
+import 'package:fashion_wave/shared/color_const.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -58,8 +59,8 @@ class CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         type: BottomNavigationBarType.fixed,
         currentIndex: selectedIndex,
         onTap: onItemTapped,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: ColorConst.selectedColor,
+        unselectedItemColor:  ColorConst.unselectedColor,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

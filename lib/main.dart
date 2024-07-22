@@ -1,9 +1,6 @@
-import 'package:fashion_wave/auth/provider/user_providr.dart';
+import 'package:fashion_wave/auth/provider/auth_providr.dart';
 import 'package:fashion_wave/auth/ui/login_screen.dart';
-import 'package:fashion_wave/product/ui/cart_screen.dart';
-import 'package:fashion_wave/product/ui/favourate_screen.dart';
-import 'package:fashion_wave/product/ui/my_order-screen.dart';
-import 'package:fashion_wave/product/ui/product_screen.dart';
+import 'package:fashion_wave/product/provider/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserProvider>(
-          create: (_) => UserProvider(),
+        ChangeNotifierProvider<AuthProvider>(
+          create: (_) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<ProductProvider>(
+          create: (_) => ProductProvider(),
         ),
       ],
       child: MaterialApp(
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:  LogInScreen(),
+        home: LogInScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
