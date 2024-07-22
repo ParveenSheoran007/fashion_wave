@@ -14,6 +14,7 @@ class CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.grey.shade100,
         title: Text('Cart'),
       ),
       body: SafeArea(

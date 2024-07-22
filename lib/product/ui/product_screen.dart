@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:fashion_wave/product/ui/profile_screen.dart';
 import 'package:fashion_wave/product/ui/widget/custtom_buttom_bar.dart';
 import 'package:flutter/material.dart';
 

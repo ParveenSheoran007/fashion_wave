@@ -3,7 +3,7 @@ import 'package:fashion_wave/product/ui/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'sign_up.dart';
+import 'sign_up_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
