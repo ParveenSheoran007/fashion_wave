@@ -1,11 +1,11 @@
 import 'package:fashion_wave/auth/ui/login_screen.dart';
 import 'package:fashion_wave/product/ui/payment_method_screen.dart';
 import 'package:fashion_wave/product/ui/setting_screen.dart';
-import 'package:fashion_wave/product/ui/widget/Addres_screen.dart';
+import 'package:fashion_wave/product/ui/widget/my_address_screen.dart';
+import 'package:fashion_wave/shared/shared_prefrences_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dart:io';
 
@@ -18,17 +18,20 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   File? image;
-  final String imagePathKey = 'profileImagePath';
 
   @override
   void initState() {
     super.initState();
+    _initSharedPreferences();
+  }
+
+  Future<void> _initSharedPreferences() async {
+    await SharedPreferencesHelper().init();
     loadImage();
   }
 
   Future<void> loadImage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? imagePath = prefs.getString(imagePathKey);
+    String? imagePath = SharedPreferencesHelper().getImagePath();
     if (imagePath != null) {
       setState(() {
         image = File(imagePath);
@@ -37,8 +40,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> saveImage(String path) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(imagePathKey, path);
+    await SharedPreferencesHelper().saveImagePath(path);
   }
 
   Future<void> pickImage(ImageSource source) async {
@@ -181,61 +183,40 @@ class ProfileScreenState extends State<ProfileScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    showPicker(context);
-                  },
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.grey.shade200,
-                    backgroundImage: image != null ? FileImage(image!) : null,
-                    child: image == null
-                        ? const Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                          )
-                        : null,
-                  ),
-                ),
-                const SizedBox(width: 28),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text('Sumit Kumar')],
-                ),
-              ],
-            ),
-            const SizedBox(height: 28),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade200),
-                    ),
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.call, color: Colors.red),
-                        SizedBox(height: 6),
-                        Text('Help Centre'),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: GestureDetector(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
                     onTap: () {
-                      showLanguageBottomSheet(context);
+                      showPicker(context);
                     },
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.grey.shade200,
+                      backgroundImage: image != null ? FileImage(image!) : null,
+                      child: image == null
+                          ? const Icon(
+                        Icons.person,
+                        color: Colors.grey,
+                      )
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(width: 28),
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text('Sumit Kumar')],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 28),
+              Row(
+                children: [
+                  Expanded(
                     child: Container(
                       height: 80,
                       decoration: BoxDecoration(
@@ -245,131 +226,154 @@ class ProfileScreenState extends State<ProfileScreen> {
                       child: const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.language, color: Colors.blue),
+                          Icon(Icons.call, color: Colors.red),
                           SizedBox(height: 6),
-                          Text('Change language'),
+                          Text('Help Centre'),
                         ],
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 28),
-            const ListTile(
-              title: Text('WishListed Products'),
-              trailing: Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: 14,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        showLanguageBottomSheet(context);
+                      },
+                      child: Container(
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.grey.shade200),
+                        ),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.language, color: Colors.blue),
+                            SizedBox(height: 6),
+                            Text('Change language'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Divider(
-              color: Colors.grey.shade200,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddressScreen(),
-                    ));
-              },
-              child: const ListTile(
-                title: Text('My Address'),
+              const SizedBox(height: 28),
+              const ListTile(
+                title: Text('WishListed Products'),
                 trailing: Icon(
                   Icons.arrow_forward_ios_outlined,
                   size: 14,
                 ),
               ),
-            ),
-            Divider(
-              color: Colors.grey.shade200,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PaymentMethodScreen(),
-                    ));
-              },
-              child: const ListTile(
-                title: Text('Payment Method'),
-                trailing: Icon(
+              Divider(
+                color: Colors.grey.shade200,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyOrderScreen(),
+                      ));
+                },
+                child: const ListTile(
+                  title: Text('My Address'),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 14,
+                  ),
+                ),
+              ),
+              Divider(
+                color: Colors.grey.shade200,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const PaymentMethodScreen(),
+                      ));
+                },
+                child: const ListTile(
+                  title: Text('Payment Method'),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 14,
+                  ),
+                ),
+              ),
+              Divider(
+                color: Colors.grey.shade200,
+              ),
+              ListTile(
+                title: const Text('My reviews'),
+                trailing: const Icon(
                   Icons.arrow_forward_ios_outlined,
                   size: 14,
                 ),
+                onTap: () {
+                  showRatingBottomSheet(context);
+                },
               ),
-            ),
-            Divider(
-              color: Colors.grey.shade200,
-            ),
-            ListTile(
-              title: const Text('My reviews'),
-              trailing: const Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: 14,
+              Divider(
+                color: Colors.grey.shade200,
               ),
-              onTap: () {
-                showRatingBottomSheet(context);
-              },
-            ),
-            Divider(
-              color: Colors.grey.shade200,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingScreen(),
-                    ));
-              },
-              child: const ListTile(
-                title: Text('Setting'),
-                trailing: Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  size: 14,
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SettingScreen(),
+                      ));
+                },
+                child: const ListTile(
+                  title: Text('Setting'),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 14,
+                  ),
                 ),
               ),
-            ),
-            Divider(
-              color: Colors.grey.shade200,
-            ),
-            InkWell(
-              onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Are you sure you want to log out?'),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('Cancel')),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const LogInScreen(),
-                                    ));
-                              },
-                              child: const Text('Sure')),
-                        ],
-                      );
-                    });
-              },
-              child: const ListTile(
-                title: Text('LogOut'),
-                trailing: Icon(
-                  (Icons.login_outlined),
+              Divider(
+                color: Colors.grey.shade200,
+              ),
+              InkWell(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Are you sure you want to log out?'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Cancel')),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>  LogInScreen(),
+                                      ));
+                                },
+                                child: const Text('Sure')),
+                          ],
+                        );
+                      });
+                },
+                child: const ListTile(
+                  title: Text('LogOut'),
+                  trailing: Icon(
+                    (Icons.login_outlined),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
