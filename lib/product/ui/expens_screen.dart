@@ -1,4 +1,5 @@
 import 'package:fashion_wave/category/provider/category_provider.dart';
+import 'package:fashion_wave/shared/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class ExpensScreen extends StatefulWidget {
@@ -20,7 +21,9 @@ class _ExpensScreenState extends State<ExpensScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConst.BackGroundColor,
       appBar: AppBar(
+        backgroundColor: ColorConst.appBarColor,
         centerTitle: true,
         title: const Text('Find Products'),
       ),

@@ -1,18 +1,20 @@
-import 'package:fashion_wave/product/ui/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:fashion_wave/product/model/product_model.dart';
 import 'package:fashion_wave/product/service/product_service.dart';
+import 'package:fashion_wave/product/ui/cart_item.dart';
 
 class ProductProvider with ChangeNotifier {
-  final ProductService _productService = ProductService();
+  final ProductService productService = ProductService();
 
-  List<ProductModel> _products = [];
-  List<CartItem> _cart = [];
-  bool _isLoading = true;
+  List<ProductModel> products = [];
+  List<CartItem> cartItems = [];
+  List<ProductModel> favoriteProducts = [];
+  bool isLoading = true;
 
-  List<ProductModel> get products => _products;
-  List<CartItem> get cart => _cart;
-  bool get isLoading => _isLoading;
+  List<ProductModel> get productss => products;
+  List<CartItem> get cartItemss => cartItems;
+  List<ProductModel> get favoriteProductss => favoriteProducts;
+  bool get isLoadings => isLoading;
 
   ProductProvider() {
     fetchProducts();
@@ -20,14 +22,24 @@ class ProductProvider with ChangeNotifier {
 
   Future<void> fetchProducts() async {
     try {
-      _products = await _productService.fetchProducts();
-      print('Products loaded: ${_products.length}');
+      products = await productService.fetchProducts();
+      print('Products loaded: ${products.length}');
     } catch (e) {
       print('Error fetching products: $e');
     } finally {
-      _isLoading = false;
+      isLoading = false;
       notifyListeners();
     }
+  }
+
+  void addToCart(ProductModel product, int quantity) {
+    cartItems.add(CartItem(product: product, quantity: quantity, onDelete: () {  },));
+    notifyListeners();
+  }
+
+  void removeFromCart(CartItem cartItem) {
+    cartItems.remove(cartItem);
+    notifyListeners();
   }
 
   void incrementCount(ProductModel product) {
@@ -35,20 +47,28 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addToCart(ProductModel product, int quantity) {
-    final existingCartItem = _cart.firstWhere(
-          (item) => item.product.id == product.id,
-      orElse: () => CartItem(product: product, quantity: 0),
-    );
+  double get totalPrice {
+    return cartItems.fold(0, (sum, item) => sum + (item.product.price * item.quantity));
+  }
 
-    if (existingCartItem.quantity == 0) {
-      _cart.add(CartItem(product: product, quantity: quantity));
-    } else {
-      existingCartItem.quantity += quantity;
-    }
-
+  void clearCart() {
+    cartItems.clear();
     notifyListeners();
   }
+
+  void addFavorite(ProductModel product) {
+    if (!favoriteProducts.contains(product)) {
+      favoriteProducts.add(product);
+      notifyListeners();
+    }
+  }
+
+  void removeFavorite(ProductModel product) {
+    favoriteProducts.remove(product);
+    notifyListeners();
+  }
+
+  bool isFavorite(ProductModel product) {
+    return favoriteProducts.contains(product);
+  }
 }
-
-

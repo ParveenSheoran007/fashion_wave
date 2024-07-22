@@ -1,9 +1,10 @@
 import 'package:fashion_wave/auth/ui/login_screen.dart';
 import 'package:fashion_wave/product/ui/cart_screen.dart';
 import 'package:fashion_wave/product/ui/favourate_screen.dart';
-import 'package:fashion_wave/product/ui/payment_method_screen.dart';
+import 'package:fashion_wave/product/ui/my_order-screen.dart';
 import 'package:fashion_wave/product/ui/setting_screen.dart';
-import 'package:fashion_wave/product/ui/widget/Addres_screen.dart';
+import 'package:fashion_wave/shared/color_const.dart';
+import 'package:fashion_wave/shared/string_const_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -143,9 +144,10 @@ class ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text(
-                'Select Language',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              Text(
+                StringConstText.changeLanguage,
+                style: const TextStyle(
+                    fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16.0),
               buildLanguageOption(Icons.language, 'English'),
@@ -173,9 +175,12 @@ class ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConst.BackGroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade100,
-        title: const Text("My Profile"),
+        backgroundColor: ColorConst.appBarColor,
+        title: Text(
+          StringConstText.myprofile,
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -184,10 +189,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CartScreen(),
+                        builder: (context) => const CartScreen(),
                       ));
                 },
-                child: Icon(Icons.shopping_cart)),
+                child: const Icon(Icons.shopping_cart)),
           )
         ],
       ),
@@ -229,14 +234,16 @@ class ProfileScreenState extends State<ProfileScreen> {
                       height: 80,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.grey.shade200),
+                        border: Border.all(color: ColorConst.containerColor),
                       ),
-                      child: const Column(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.call, color: Colors.red),
-                          SizedBox(height: 6),
-                          Text('Help Centre'),
+                          const Icon(Icons.call, color: Colors.red),
+                          const SizedBox(height: 6),
+                          Text(
+                            StringConstText.helpCenter,
+                          ),
                         ],
                       ),
                     ),
@@ -251,14 +258,17 @@ class ProfileScreenState extends State<ProfileScreen> {
                         height: 80,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.grey.shade200),
+                          border: Border.all(color: ColorConst.containerColor),
                         ),
-                        child: const Column(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.language, color: Colors.blue),
-                            SizedBox(height: 6),
-                            Text('Change language'),
+                            const Icon(Icons.language,
+                                color: ColorConst.languageIcon),
+                            const SizedBox(height: 6),
+                            Text(
+                              StringConstText.changeLanguage,
+                            ),
                           ],
                         ),
                       ),
@@ -266,76 +276,48 @@ class ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 28),
+              const SizedBox(height: 28),
               InkWell(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FavourateScreen(),
+                        builder: (context) => const FavourateScreen(),
                       ));
                 },
-                child: const ListTile(
-                  title: Text('WishListed Products'),
-                  trailing: Icon(
+                child: ListTile(
+                  title: Text(
+                    StringConstText.wishListedProducts,
+                  ),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_outlined,
                     size: 14,
                   ),
                 ),
               ),
               Divider(
-                color: Colors.grey.shade200,
+                color: ColorConst.containerColor,
               ),
               InkWell(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AddressScreen(),
+                        builder: (context) => const MyOrderScreen(),
                       ));
                 },
-                child: const ListTile(
-                  title: Text('My Address'),
-                  trailing: Icon(
+                child: ListTile(
+                  title: Text(
+                    StringConstText.myAddress,
+                  ),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_outlined,
                     size: 14,
                   ),
                 ),
               ),
               Divider(
-                color: Colors.grey.shade200,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PaymentMethodScreen(),
-                      ));
-                },
-                child: const ListTile(
-                  title: Text('Payment Method'),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    size: 14,
-                  ),
-                ),
-              ),
-              Divider(
-                color: Colors.grey.shade200,
-              ),
-              ListTile(
-                title: const Text('My reviews'),
-                trailing: const Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  size: 14,
-                ),
-                onTap: () {
-                  showRatingBottomSheet(context);
-                },
-              ),
-              Divider(
-                color: Colors.grey.shade200,
+                color:ColorConst.containerColor,
               ),
               InkWell(
                 onTap: () {
@@ -345,16 +327,18 @@ class ProfileScreenState extends State<ProfileScreen> {
                         builder: (context) => const SettingScreen(),
                       ));
                 },
-                child: const ListTile(
-                  title: Text('Setting'),
-                  trailing: Icon(
+                child: ListTile(
+                  title: Text(
+                    StringConstText.setting,
+                  ),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_outlined,
                     size: 14,
                   ),
                 ),
               ),
               Divider(
-                color: Colors.grey.shade200,
+                color: ColorConst.containerColor,
               ),
               InkWell(
                 onTap: () {
@@ -362,14 +346,13 @@ class ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title:
-                              const Text('Are you sure you want to log out?'),
+                          title: Text(StringConstText.alertdialog),
                           actions: [
                             TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: const Text('Cancel')),
+                                child: Text(StringConstText.alertdialogcancel)),
                             TextButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -379,14 +362,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                                             const LogInScreen(),
                                       ));
                                 },
-                                child: const Text('Sure')),
+                                child: Text(StringConstText.alertdialogsure)),
                           ],
                         );
                       });
                 },
-                child: const ListTile(
-                  title: Text('LogOut'),
-                  trailing: Icon(
+                child: ListTile(
+                  title: Text(StringConstText.logOut),
+                  trailing: const Icon(
                     (Icons.login_outlined),
                   ),
                 ),

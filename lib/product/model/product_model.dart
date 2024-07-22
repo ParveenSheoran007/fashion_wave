@@ -3,7 +3,7 @@ class ProductModel {
   final String name;
   final String description;
   final int price;
-  late final int clickCount;
+      int clickCount;
 
   ProductModel(
       {

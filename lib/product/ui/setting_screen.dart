@@ -1,3 +1,4 @@
+import 'package:fashion_wave/shared/color_const.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -15,8 +16,9 @@ class SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConst.BackGroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade100,
+          backgroundColor: ColorConst.appBarColor,
         title: const Text('Setting'),
       ),
       body: SingleChildScrollView(
@@ -30,30 +32,30 @@ class SettingScreenState extends State<SettingScreen> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-              Card(
-                child: Container(
-                  decoration: const BoxDecoration(color: Colors.white70),
-                  child: TextFormField(
-                    cursorColor: Colors.black,
-                    decoration: const InputDecoration(
-                      hintText: 'Full Name',
-                      hintStyle: TextStyle(color: Colors.black26),
-                      border: InputBorder.none,
-                    ),
+              Container(
+                decoration:  BoxDecoration(color: ColorConst.textfilled,
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: TextFormField(
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    hintText: '  Full Name',
+                    hintStyle: TextStyle(color: Colors.black26),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
               const SizedBox(height: 10),
-              Card(
-                child: Container(
-                  decoration: const BoxDecoration(color: Colors.white70),
-                  child: TextFormField(
-                    cursorColor: Colors.black,
-                    decoration: const InputDecoration(
-                      hintText: 'Date of Birth',
-                      hintStyle: TextStyle(color: Colors.black26),
-                      border: InputBorder.none,
-                    ),
+              Container(
+                decoration:  BoxDecoration(color: ColorConst.textfilled,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextFormField(
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    hintText: '  Date of Birth',
+                    hintStyle: TextStyle(color: Colors.black26),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
@@ -79,19 +81,19 @@ class SettingScreenState extends State<SettingScreen> {
                 ],
               ),
               const SizedBox(height: 14),
-              Card(
-                child: Container(
-                  decoration: const BoxDecoration(color: Colors.white70),
-                  child: TextFormField(
-                    onTap: () {
-                      showPasswordChangeBottomSheet(context);
-                    },
-                    cursorColor: Colors.black,
-                    decoration: const InputDecoration(
-                      hintText: 'Password',
-                      hintStyle: TextStyle(color: Colors.black26),
-                      border: InputBorder.none,
-                    ),
+              Container(
+                decoration:  BoxDecoration(color: ColorConst.textfilled,
+                borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextFormField(
+                  onTap: () {
+                    showPasswordChangeBottomSheet(context);
+                  },
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    hintText: '  Password',
+                    hintStyle: TextStyle(color: Colors.black26),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
@@ -189,57 +191,51 @@ class SettingScreenState extends State<SettingScreen> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
-                  Card(
-                    child: Container(
-                      decoration: const BoxDecoration(color: Colors.white70),
-                      child: TextFormField(
-                        onTap: () {
-                          showPasswordChangeBottomSheet(context);
-                        },
-                        cursorColor: Colors.black,
-                        decoration: const InputDecoration(
-                          hintText: 'Old Password',
-                          hintStyle: TextStyle(color: Colors.black26),
-                          border: InputBorder.none,
-                        ),
+                  Container(
+                    decoration: const BoxDecoration(color: ColorConst.textfilled),
+                    child: TextFormField(
+                      onTap: () {
+                        showPasswordChangeBottomSheet(context);
+                      },
+                      cursorColor: Colors.black,
+                      decoration: const InputDecoration(
+                        hintText: 'Old Password',
+                        hintStyle: TextStyle(color: Colors.black26),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
                   const SizedBox(
                     height: 14,
                   ),
-                  Card(
-                    child: Container(
-                      decoration: const BoxDecoration(color: Colors.white70),
-                      child: TextFormField(
-                        onTap: () {
-                          showPasswordChangeBottomSheet(context);
-                        },
-                        cursorColor: Colors.black,
-                        decoration: const InputDecoration(
-                          hintText: 'New Password',
-                          hintStyle: TextStyle(color: Colors.black26),
-                          border: InputBorder.none,
-                        ),
+                  Container(
+                    decoration: const BoxDecoration(color: ColorConst.textfilled),
+                    child: TextFormField(
+                      onTap: () {
+                        showPasswordChangeBottomSheet(context);
+                      },
+                      cursorColor: Colors.black,
+                      decoration: const InputDecoration(
+                        hintText: 'New Password',
+                        hintStyle: TextStyle(color: Colors.black26),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
                   const SizedBox(
                     height: 14,
                   ),
-                  Card(
-                    child: Container(
-                      decoration: const BoxDecoration(color: Colors.white70),
-                      child: TextFormField(
-                        onTap: () {
-                          showPasswordChangeBottomSheet(context);
-                        },
-                        cursorColor: Colors.black,
-                        decoration: const InputDecoration(
-                          hintText: 'Reset New Password',
-                          hintStyle: TextStyle(color: Colors.black26),
-                          border: InputBorder.none,
-                        ),
+                  Container(
+                    decoration: const BoxDecoration(color: ColorConst.textfilled),
+                    child: TextFormField(
+                      onTap: () {
+                        showPasswordChangeBottomSheet(context);
+                      },
+                      cursorColor: Colors.black,
+                      decoration: const InputDecoration(
+                        hintText: 'Reset New Password',
+                        hintStyle: TextStyle(color: Colors.black26),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
