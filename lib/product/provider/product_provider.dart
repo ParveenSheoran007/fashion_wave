@@ -8,10 +8,12 @@ class ProductProvider with ChangeNotifier {
 
   List<ProductModel> _products = [];
   List<CartItem> _cartItems = [];
+  List<ProductModel> _favoriteProducts = [];
   bool _isLoading = true;
 
   List<ProductModel> get products => _products;
   List<CartItem> get cartItems => _cartItems;
+  List<ProductModel> get favoriteProducts => _favoriteProducts;
   bool get isLoading => _isLoading;
 
   ProductProvider() {
@@ -52,5 +54,21 @@ class ProductProvider with ChangeNotifier {
   void clearCart() {
     _cartItems.clear();
     notifyListeners();
+  }
+
+  void addFavorite(ProductModel product) {
+    if (!_favoriteProducts.contains(product)) {
+      _favoriteProducts.add(product);
+      notifyListeners();
+    }
+  }
+
+  void removeFavorite(ProductModel product) {
+    _favoriteProducts.remove(product);
+    notifyListeners();
+  }
+
+  bool isFavorite(ProductModel product) {
+    return _favoriteProducts.contains(product);
   }
 }

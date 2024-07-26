@@ -1,3 +1,5 @@
+import 'package:fashion_wave/shared/color_const.dart';
+import 'package:fashion_wave/shared/string_const_text.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -37,14 +39,14 @@ class SignUpScreenState extends State<SignUpScreen> {
                   height: 20,
                 ),
                 TextFormField(
-                  cursorColor: Colors.black,
+                  cursorColor:ColorConst.corsourColor,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                      hintText: 'UserName',
+                      hintText: StringConstText.emailText,
                       hintStyle: const TextStyle(color: Colors.white),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(color: ColorConst.textfilled),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(40))),
@@ -53,10 +55,10 @@ class SignUpScreenState extends State<SignUpScreen> {
                   height: 14,
                 ),
                 TextFormField(
-                  cursorColor: Colors.white,
+                  cursorColor: ColorConst.corsourColor,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                      hintText: 'Password',
+                      hintText: StringConstText.passwordText,
                       hintStyle: const TextStyle(color: Colors.white),
                       suffixIcon: const Icon(
                         Icons.remove_red_eye,
@@ -64,7 +66,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                       suffixIconColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
-                        borderSide: const BorderSide(color: Colors.white),
+                        borderSide: const BorderSide(color: ColorConst.textfilled),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
@@ -77,13 +79,13 @@ class SignUpScreenState extends State<SignUpScreen> {
                   width: MediaQuery.of(context).size.width,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: Colors.red.shade400,
+                    color: ColorConst.buttonColor,
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  child: const Center(
+                  child:  Center(
                       child: Text(
-                    'SignUp',
-                    style: TextStyle(
+                        StringConstText.signUpButton,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
@@ -95,9 +97,9 @@ class SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Already have an account?",
-                      style: TextStyle(color: Colors.white),
+                     Text(
+                      StringConstText.alreadyAccount,
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(
                       width: 4,
@@ -106,9 +108,9 @@ class SignUpScreenState extends State<SignUpScreen> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'LogIn',
-                        style: TextStyle(color: Colors.red,fontSize: 16),
+                      child:  Text(
+                        StringConstText.loginText,
+                        style: const TextStyle(color: ColorConst.buttonColor,fontSize: 16),
                       ),
                     )
                   ],

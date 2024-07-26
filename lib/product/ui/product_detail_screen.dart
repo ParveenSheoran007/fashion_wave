@@ -8,10 +8,10 @@ class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({required this.productId, super.key});
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  State<ProductDetailScreen> createState() => ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class ProductDetailScreenState extends State<ProductDetailScreen> {
   int quantity = 1;
 
   @override
@@ -30,19 +30,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Display product image
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(12),
-              //   child: Image.network(
-              //     product.imageUrl,
-              //     fit: BoxFit.cover,
-              //     width: double.infinity,
-              //     height: 300,
-              //   ),
-              // ),
               const SizedBox(height: 20),
-
-              // Display product name
               Text(
                 product.name,
                 style: const TextStyle(
@@ -52,10 +40,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-
               // Display product price
               Text(
-                '\$${(product.price * quantity).toStringAsFixed(2)}',
+                '\Rs${(product.price * quantity).toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -63,8 +50,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Display product description
               Text(
                 product.description,
                 style: const TextStyle(
@@ -74,65 +59,66 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Quantity selector
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+             Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.remove),
-                    onPressed: () {
-                      if (quantity > 1) {
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey)
+                    ),
+                    child: InkWell(onTap: (){
+                      if(quantity>0) {
                         setState(() {
                           quantity--;
                         });
                       }
                     },
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      '$quantity',
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.add),
+                        child: Center(child: Icon(Icons.remove_outlined))),
+                  ),SizedBox(width: 10,),
+                 Text('$quantity'),
+                 SizedBox(width: 10,),
+                 Container(
+                   height: 40,
+                   width: 40,
+                   decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(10),
+                     border: Border.all(color: Colors.grey)
+                   ),
+                   child: InkWell(onTap: (){
+                         setState(() {
+                           quantity++;
+                         });
+                   },
+                       child: const Center(child: Icon(Icons.add))),
+                 ),
+                  const SizedBox(width: 190),
+                  ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        quantity++;
-                      });
+                      productProvider.addToCart(product, quantity);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Added to cart')),
+                      );
+                      Navigator.pop(context);
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text(
+                      'Add to Cart',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 20),
-
-              // Add to Cart button
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    productProvider.addToCart(product, quantity);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Added to cart')),
-                    );
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    'Add to Cart',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
               ),
             ],
           ),

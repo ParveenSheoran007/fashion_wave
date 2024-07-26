@@ -1,11 +1,14 @@
 import 'package:fashion_wave/auth/ui/login_screen.dart';
-import 'package:fashion_wave/product/ui/payment_method_screen.dart';
+import 'package:fashion_wave/product/ui/cart_screen.dart';
+import 'package:fashion_wave/product/ui/favourate_screen.dart';
+import 'package:fashion_wave/product/ui/my_order-screen.dart';
 import 'package:fashion_wave/product/ui/setting_screen.dart';
-import 'package:fashion_wave/product/ui/widget/my_address_screen.dart';
-import 'package:fashion_wave/shared/shared_prefrences_helper.dart';
+import 'package:fashion_wave/shared/color_const.dart';
+import 'package:fashion_wave/shared/string_const_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dart:io';
 
@@ -18,20 +21,17 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   File? image;
+  final String imagePathKey = 'profileImagePath';
 
   @override
   void initState() {
     super.initState();
-    _initSharedPreferences();
-  }
-
-  Future<void> _initSharedPreferences() async {
-    await SharedPreferencesHelper().init();
     loadImage();
   }
 
   Future<void> loadImage() async {
-    String? imagePath = SharedPreferencesHelper().getImagePath();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString(imagePathKey);
     if (imagePath != null) {
       setState(() {
         image = File(imagePath);
@@ -40,7 +40,8 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> saveImage(String path) async {
-    await SharedPreferencesHelper().saveImagePath(path);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(imagePathKey, path);
   }
 
   Future<void> pickImage(ImageSource source) async {
@@ -143,9 +144,10 @@ class ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text(
-                'Select Language',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              Text(
+                StringConstText.changeLanguage,
+                style: const TextStyle(
+                    fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16.0),
               buildLanguageOption(Icons.language, 'English'),
@@ -175,11 +177,21 @@ class ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey.shade100,
-        title: const Text("My Profile"),
+        title: Text(
+          StringConstText.myprofile,
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: Icon(Icons.shopping_cart),
+            child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CartScreen(),
+                      ));
+                },
+                child: const Icon(Icons.shopping_cart)),
           )
         ],
       ),
@@ -200,9 +212,9 @@ class ProfileScreenState extends State<ProfileScreen> {
                       backgroundImage: image != null ? FileImage(image!) : null,
                       child: image == null
                           ? const Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                      )
+                              Icons.person,
+                              color: Colors.grey,
+                            )
                           : null,
                     ),
                   ),
@@ -223,12 +235,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.grey.shade200),
                       ),
-                      child: const Column(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.call, color: Colors.red),
-                          SizedBox(height: 6),
-                          Text('Help Centre'),
+                          const Icon(Icons.call, color: Colors.red),
+                          const SizedBox(height: 6),
+                          Text(
+                            StringConstText.helpCenter,
+                          ),
                         ],
                       ),
                     ),
@@ -245,12 +259,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: Colors.grey.shade200),
                         ),
-                        child: const Column(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.language, color: Colors.blue),
-                            SizedBox(height: 6),
-                            Text('Change language'),
+                            const Icon(Icons.language, color: ColorConst.languageIcon),
+                            const SizedBox(height: 6),
+                            Text(
+                              StringConstText.changeLanguage,
+                            ),
                           ],
                         ),
                       ),
@@ -259,27 +275,19 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               const SizedBox(height: 28),
-              const ListTile(
-                title: Text('WishListed Products'),
-                trailing: Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  size: 14,
-                ),
-              ),
-              Divider(
-                color: Colors.grey.shade200,
-              ),
               InkWell(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MyOrderScreen(),
+                        builder: (context) => const FavourateScreen(),
                       ));
                 },
-                child: const ListTile(
-                  title: Text('My Address'),
-                  trailing: Icon(
+                child: ListTile(
+                  title: Text(
+                    StringConstText.wishListedProducts,
+                  ),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_outlined,
                     size: 14,
                   ),
@@ -293,12 +301,14 @@ class ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const PaymentMethodScreen(),
+                        builder: (context) => const MyOrderScreen(),
                       ));
                 },
-                child: const ListTile(
-                  title: Text('Payment Method'),
-                  trailing: Icon(
+                child: ListTile(
+                  title: Text(
+                    StringConstText.myAddress,
+                  ),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_outlined,
                     size: 14,
                   ),
@@ -308,7 +318,9 @@ class ProfileScreenState extends State<ProfileScreen> {
                 color: Colors.grey.shade200,
               ),
               ListTile(
-                title: const Text('My reviews'),
+                title: Text(
+                  StringConstText.myReview,
+                ),
                 trailing: const Icon(
                   Icons.arrow_forward_ios_outlined,
                   size: 14,
@@ -328,9 +340,11 @@ class ProfileScreenState extends State<ProfileScreen> {
                         builder: (context) => const SettingScreen(),
                       ));
                 },
-                child: const ListTile(
-                  title: Text('Setting'),
-                  trailing: Icon(
+                child: ListTile(
+                  title: Text(
+                    StringConstText.setting,
+                  ),
+                  trailing: const Icon(
                     Icons.arrow_forward_ios_outlined,
                     size: 14,
                   ),
@@ -345,29 +359,30 @@ class ProfileScreenState extends State<ProfileScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('Are you sure you want to log out?'),
+                          title: Text(StringConstText.alertdialog),
                           actions: [
                             TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: const Text('Cancel')),
+                                child: Text(StringConstText.alertdialogcancel)),
                             TextButton(
                                 onPressed: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>  LogInScreen(),
+                                        builder: (context) =>
+                                            const LogInScreen(),
                                       ));
                                 },
-                                child: const Text('Sure')),
+                                child: Text(StringConstText.alertdialogsure)),
                           ],
                         );
                       });
                 },
-                child: const ListTile(
-                  title: Text('LogOut'),
-                  trailing: Icon(
+                child: ListTile(
+                  title: Text(StringConstText.logOut),
+                  trailing: const Icon(
                     (Icons.login_outlined),
                   ),
                 ),

@@ -44,9 +44,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final productProvider = Provider.of<ProductProvider>(context);
     final cartItems = productProvider.cartItems;
 
-    double totalPrice = cartItems.fold(0, (sum, item) => sum + (item.product.price * item.quantity));
+    double totalPrice = cartItems.fold(
+        0, (sum, item) => sum + (item.product.price * item.quantity));
 
-    List<String> products = cartItems.map((item) => '${item.product.name}: \$${(item.product.price * item.quantity).toStringAsFixed(2)} (Qty: ${item.quantity})').toList();
+    List<String> products = cartItems
+        .map((item) =>
+            '${item.product.name}: \$${(item.product.price * item.quantity).toStringAsFixed(2)} (Qty: ${item.quantity})')
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -72,7 +76,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     return ListTile(
                       title: Text(cartItem.product.name),
                       subtitle: Text('Quantity: ${cartItem.quantity}'),
-                      trailing: Text('\$${(cartItem.product.price * cartItem.quantity).toStringAsFixed(2)}'),
+                      trailing: Text(
+                          '\$${(cartItem.product.price * cartItem.quantity).toStringAsFixed(2)}'),
                     );
                   },
                 ),
@@ -80,12 +85,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               const SizedBox(height: 16),
               Text(
                 'Total: \$${totalPrice.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.headline6,
               ),
               const SizedBox(height: 16),
               Text(
                 'Shipping Information',
-                style: Theme.of(context).textTheme.headline6,
               ),
               const SizedBox(height: 8),
               TextField(
@@ -119,30 +122,63 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               const SizedBox(height: 16),
               Center(
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   onPressed: () async {
-                    await saveUserData(products);
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Checkout'),
-                        content: const Text('Order placed successfully!'),
-                        actions: <Widget>[
-                          TextButton(
-                            child: const Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              productProvider.clearCart();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => const MyOrderScreen()),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    );
+                    if (nameController.text.isEmpty ||
+                        addressController.text.isEmpty ||
+                        paymentMethodController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Incomplete Information'),
+                          content: const Text(
+                              'Please fill in all the fields before proceeding.'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      await saveUserData(products);
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Checkout'),
+                          content: const Text('Order placed successfully!'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Cancel'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                productProvider.clearCart();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MyOrderScreen()),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
-                  child: const Text('Place Order'),
+                  child: const Text(
+                    'Place Order',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],

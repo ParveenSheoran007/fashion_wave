@@ -1,22 +1,24 @@
 import 'dart:async';
+
 import 'package:fashion_wave/product/provider/product_provider.dart';
-import 'package:fashion_wave/product/ui/profile_screen.dart';
 import 'package:fashion_wave/product/ui/view_all-product_list_screen.dart';
+
 import 'package:fashion_wave/product/ui/widget/custtom_buttom_bar.dart';
+import 'package:fashion_wave/shared/color_const.dart';
+import 'package:fashion_wave/shared/string_const_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:fashion_wave/product/ui/product_detail_screen.dart'; // Import the ProductDetailScreen
+import 'package:fashion_wave/product/ui/product_detail_screen.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
+  State<ProductScreen> createState() => ProductScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class ProductScreenState extends State<ProductScreen> {
   final PageController pageController = PageController();
-
   int currentPage = 0;
   late Timer timer;
 
@@ -94,9 +96,9 @@ class _ProductScreenState extends State<ProductScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Popular',
-                          style: TextStyle(
+                        Text(
+                          StringConstText.popularText,
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                           ),
@@ -106,15 +108,15 @@ class _ProductScreenState extends State<ProductScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ViewAllProductListScreen(),
+                                builder: (context) =>
+                                    const ViewAllProductListScreen(),
                               ),
                             );
-
                           },
-                          child: const Text(
-                            'View All',
-                            style: TextStyle(
-                              color: Colors.red,
+                          child: Text(
+                            StringConstText.vielAll,
+                            style: const TextStyle(
+                              color: ColorConst.buttonColor,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -131,7 +133,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 6,
                             mainAxisSpacing: 6,
@@ -153,9 +155,10 @@ class _ProductScreenState extends State<ProductScreen> {
                                 productProvider.incrementCount(product);
                               },
                               child: Container(
-                                padding: EdgeInsets.all(2),
+                                padding: const EdgeInsets.all(2),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey.shade300),
+                                  border:
+                                      Border.all(color: Colors.grey.shade300),
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                                 child: Column(
@@ -184,6 +187,27 @@ class _ProductScreenState extends State<ProductScreen> {
                                         color: Colors.grey,
                                         fontSize: 14,
                                       ),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        productProvider.favoriteProducts
+                                                .contains(product)
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (productProvider.favoriteProducts
+                                              .contains(product)) {
+                                            productProvider
+                                                .removeFavorite(product);
+                                          } else {
+                                            productProvider
+                                                .addFavorite(product);
+                                          }
+                                        });
+                                      },
                                     ),
                                   ],
                                 ),
