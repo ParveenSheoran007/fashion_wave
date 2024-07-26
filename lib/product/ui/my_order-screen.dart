@@ -1,4 +1,3 @@
-import 'package:fashion_wave/shared/color_const.dart';
 import 'package:fashion_wave/shared/string_const_text.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,22 +33,13 @@ class MyOrderScreenState extends State<MyOrderScreen> {
     });
   }
 
-  bool get isUserDataComplete {
-    return name.isNotEmpty &&
-        address.isNotEmpty &&
-        products.isNotEmpty &&
-        orderDate.isNotEmpty &&
-        orderTime.isNotEmpty;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConst.BackGroundColor,
       appBar: AppBar(
-        backgroundColor: ColorConst.appBarColor,
-        title: Text(
-          StringConstText.orderDetail,
+        backgroundColor: Colors.grey.shade100,
+        title:  Text(
+            StringConstText.orderDetail,
           style: TextStyle(color: Colors.black),
         ),
         iconTheme: const IconThemeData(color: Colors.black),
@@ -57,32 +47,24 @@ class MyOrderScreenState extends State<MyOrderScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
-          child: isUserDataComplete
-              ? Container(
+          child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: Border.all(color: ColorConst.containerColor),
+              border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildInfoRow(StringConstText.name, name),
+                buildInfoRow( StringConstText.name, name),
                 const SizedBox(height: 8),
-                buildInfoRow(StringConstText.address, address),
+                buildInfoRow( StringConstText.address, address),
                 const SizedBox(height: 16),
                 ...products.map((product) => buildProductRow(product)).toList(),
-                buildInfoRow(StringConstText.orderDate, orderDate),
+                buildInfoRow( StringConstText.orderDate, orderDate),
                 const SizedBox(height: 8),
-                buildInfoRow(StringConstText.orderTime, orderTime),
+                buildInfoRow( StringConstText.orderTime, orderTime),
               ],
-            ),
-          )
-              : Center(
-            child: Text(
-              'Please fill out your details to view your order.',
-              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-              textAlign: TextAlign.center,
             ),
           ),
         ),

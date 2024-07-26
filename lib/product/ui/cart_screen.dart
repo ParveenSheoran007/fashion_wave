@@ -1,5 +1,4 @@
 import 'package:fashion_wave/product/ui/check_out_screen.dart';
-import 'package:fashion_wave/shared/color_const.dart';
 import 'package:fashion_wave/shared/string_const_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +18,9 @@ class CartScreenState extends State<CartScreen> {
     final cartItems = productProvider.cartItems;
 
     return Scaffold(
-      backgroundColor: ColorConst.BackGroundColor,
       appBar: AppBar(
-        title: Text(
-          StringConstText.cart,
-        ),
-        backgroundColor: ColorConst.appBarColor
+        title:  Text(StringConstText.cart,),
+        backgroundColor: Colors.grey.shade100,
       ),
       body: SafeArea(
         child: Padding(
@@ -35,13 +31,13 @@ class CartScreenState extends State<CartScreen> {
                 child: ListView.separated(
                   itemCount: cartItems.length,
                   separatorBuilder: (context, index) =>
-                      const SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   itemBuilder: (context, index) {
                     final cartItem = cartItems[index];
                     return Container(
                       height: 80,
                       decoration: BoxDecoration(
-                        border: Border.all(color: ColorConst.containerColor),
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
@@ -87,8 +83,7 @@ class CartScreenState extends State<CartScreen> {
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text(' Cart'),
-                        content: const Text(
-                            'Your cart is empty. Please add items to the cart before proceeding.'),
+                        content: const Text('Your cart is empty. Please add items to the cart before proceeding.'),
                         actions: <Widget>[
                           TextButton(
                             child: const Text('OK'),
@@ -107,8 +102,8 @@ class CartScreenState extends State<CartScreen> {
                     );
                   }
                 },
-                child: Text(
-                  StringConstText.processCheckOut,
+                child:  Text(
+                    StringConstText.processCheckOut,
                   style: TextStyle(color: Colors.white),
                 ),
               ),

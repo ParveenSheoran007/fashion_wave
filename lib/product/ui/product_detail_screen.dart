@@ -1,5 +1,4 @@
 import 'package:fashion_wave/product/provider/product_provider.dart';
-import 'package:fashion_wave/shared/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,13 +17,12 @@ class ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
-    final product =
-        productProvider.products.firstWhere((p) => p.id == widget.productId);
+    final product = productProvider.products.firstWhere((p) => p.id == widget.productId);
 
     return Scaffold(
-      backgroundColor: ColorConst.BackGroundColor,
       appBar: AppBar(
-        backgroundColor: ColorConst.appBarColor, title: Text(product.name),
+        title: Text(product.name),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -61,46 +59,41 @@ class ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               const SizedBox(height: 20),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+             Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     height: 40,
                     width: 40,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color:ColorConst.containerColor)),
-                    child: InkWell(
-                        onTap: () {
-                          if (quantity > 0) {
-                            setState(() {
-                              quantity--;
-                            });
-                          }
-                        },
-                        child: const Center(child: Icon(Icons.remove_outlined))),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text('$quantity',style: const TextStyle(fontSize: 20),),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color:ColorConst.containerColor)),
-                    child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            quantity++;
-                          });
-                        },
-                        child: const Center(child: Icon(Icons.add))),
-                  ),
+                        border: Border.all(color: Colors.grey)
+                    ),
+                    child: InkWell(onTap: (){
+                      if(quantity>0) {
+                        setState(() {
+                          quantity--;
+                        });
+                      }
+                    },
+                        child: Center(child: Icon(Icons.remove_outlined))),
+                  ),SizedBox(width: 10,),
+                 Text('$quantity'),
+                 SizedBox(width: 10,),
+                 Container(
+                   height: 40,
+                   width: 40,
+                   decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(10),
+                     border: Border.all(color: Colors.grey)
+                   ),
+                   child: InkWell(onTap: (){
+                         setState(() {
+                           quantity++;
+                         });
+                   },
+                       child: const Center(child: Icon(Icons.add))),
+                 ),
                   const SizedBox(width: 190),
                   ElevatedButton(
                     onPressed: () {
@@ -112,8 +105,7 @@ class ProductDetailScreenState extends State<ProductDetailScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 16, horizontal: 32),
+                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

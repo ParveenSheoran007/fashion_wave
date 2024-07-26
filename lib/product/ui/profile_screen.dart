@@ -175,9 +175,8 @@ class ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConst.BackGroundColor,
       appBar: AppBar(
-        backgroundColor: ColorConst.appBarColor,
+        backgroundColor: Colors.grey.shade100,
         title: Text(
           StringConstText.myprofile,
         ),
@@ -234,7 +233,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                       height: 80,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: ColorConst.containerColor),
+                        border: Border.all(color: Colors.grey.shade200),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -258,13 +257,12 @@ class ProfileScreenState extends State<ProfileScreen> {
                         height: 80,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: ColorConst.containerColor),
+                          border: Border.all(color: Colors.grey.shade200),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.language,
-                                color: ColorConst.languageIcon),
+                            const Icon(Icons.language, color: ColorConst.languageIcon),
                             const SizedBox(height: 6),
                             Text(
                               StringConstText.changeLanguage,
@@ -296,7 +294,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               Divider(
-                color: ColorConst.containerColor,
+                color: Colors.grey.shade200,
               ),
               InkWell(
                 onTap: () {
@@ -317,7 +315,22 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               Divider(
-                color:ColorConst.containerColor,
+                color: Colors.grey.shade200,
+              ),
+              ListTile(
+                title: Text(
+                  StringConstText.myReview,
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  size: 14,
+                ),
+                onTap: () {
+                  showRatingBottomSheet(context);
+                },
+              ),
+              Divider(
+                color: Colors.grey.shade200,
               ),
               InkWell(
                 onTap: () {
@@ -338,7 +351,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               Divider(
-                color: ColorConst.containerColor,
+                color: Colors.grey.shade200,
               ),
               InkWell(
                 onTap: () {

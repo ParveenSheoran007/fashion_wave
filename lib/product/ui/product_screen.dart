@@ -27,7 +27,7 @@ class ProductScreenState extends State<ProductScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ProductProvider>(context, listen: false).fetchProducts();
-      startAutoScroll();
+      _startAutoScroll();
     });
   }
 
@@ -38,7 +38,7 @@ class ProductScreenState extends State<ProductScreen> {
     super.dispose();
   }
 
-  void startAutoScroll() {
+  void _startAutoScroll() {
     timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (currentPage < 2) {
         currentPage++;
@@ -57,12 +57,12 @@ class ProductScreenState extends State<ProductScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorConst.BackGroundColor,
         body: Consumer<ProductProvider>(
           builder: (context, productProvider, child) {
             if (productProvider.isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
+
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,12 +73,12 @@ class ProductScreenState extends State<ProductScreen> {
                       controller: pageController,
                       children: [
                         Image.network(
-                          'https://www.slideteam.net/media/catalog/product/cache/1280x720/f/a/fashion_company_profile_powerpoint_presentation_slides_cp_cd_slide01.jpg',
+                          'https://img.freepik.com/free-psd/sales-banner-template-with-image_23-2148149654.jpg',
                           fit: BoxFit.cover,
                           width: double.infinity,
                         ),
                         Image.network(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2WihTvUQzM__DJhKKmGyzN7lDAnuSCDM1ua3rr5cRES0g-CQz-0XtkjGydAZQqUokAZU&usqp=CAU',
+                          'https://www.slideteam.net/media/catalog/product/cache/1280x720/f/a/fashion_company_profile_powerpoint_presentation_slides_cp_cd_slide01.jpg',
                           fit: BoxFit.cover,
                           width: double.infinity,
                         ),
@@ -135,9 +135,9 @@ class ProductScreenState extends State<ProductScreen> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 1,
+                            crossAxisSpacing: 6,
+                            mainAxisSpacing: 6,
+                            childAspectRatio: 0.75,
                           ),
                           itemCount: productProvider.products.length,
                           itemBuilder: (context, index) {
@@ -157,38 +157,59 @@ class ProductScreenState extends State<ProductScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(2),
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: ColorConst.containerColor),
-                                  borderRadius: BorderRadius.circular(10),
+                                  border:
+                                      Border.all(color: Colors.grey.shade300),
+                                  borderRadius: BorderRadius.circular(14),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        product.name,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                        ),
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
                                       ),
-                                      Spacer(),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                        '\Rs${product.price}',
-                                        style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      '\Rs${product.price}',
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      const SizedBox(height: 5),
-                                    ],
-                                  ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      'Clicks: ${product.clickCount}',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        productProvider.favoriteProducts
+                                                .contains(product)
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (productProvider.favoriteProducts
+                                              .contains(product)) {
+                                            productProvider
+                                                .removeFavorite(product);
+                                          } else {
+                                            productProvider
+                                                .addFavorite(product);
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
                             );
@@ -207,25 +228,3 @@ class ProductScreenState extends State<ProductScreen> {
     );
   }
 }
-
-/*,IconButton(
-icon: Icon(
-productProvider.favoriteProducts
-    .contains(product)
-? Icons.favorite
-    : Icons.favorite_border,
-color: Colors.red,
-),
-onPressed: () {
-setState(() {
-if (productProvider.favoriteProducts
-    .contains(product)) {
-productProvider
-    .removeFavorite(product);
-} else {
-productProvider
-    .addFavorite(product);
-}
-});
-},
-),*/

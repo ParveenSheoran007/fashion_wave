@@ -17,11 +17,4 @@ class ColorConst {
 
  //Profile Screen Color
   static const Color languageIcon = Colors.blue;
-
-  //container Color
-  static Color containerColor = Colors.white;
-
-  // App backGround Colour
-static Color BackGroundColor = Colors.grey.shade300;
-static Color appBarColor = Colors.grey.shade200;
 }

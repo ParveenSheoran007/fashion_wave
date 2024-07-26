@@ -12,10 +12,10 @@ class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
 
   @override
-  State<LogInScreen> createState() => LoginScreenState();
+  State<LogInScreen> createState() => _LoginScreenState();
 }
 
-class LoginScreenState extends State<LogInScreen> {
+class _LoginScreenState extends State<LogInScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   bool isPasswordVisible = false;
@@ -58,8 +58,7 @@ class LoginScreenState extends State<LogInScreen> {
                       hintStyle: const TextStyle(color: Colors.white),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
-                        borderSide:
-                            const BorderSide(color: ColorConst.textfilled),
+                        borderSide: const BorderSide(color:  ColorConst.textfilled),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(40))),
@@ -129,10 +128,10 @@ class LoginScreenState extends State<LogInScreen> {
                               ? const CircularProgressIndicator(
                                   color: ColorConst.buttonColor,
                                 )
-                              : Text(
-                                  StringConstText.loginButton,
+                              :  Text(
+                            StringConstText.loginButton,
                                   style: const TextStyle(
-                                      color: Colors.white,
+                                      color:Colors.white,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 )),
@@ -145,7 +144,7 @@ class LoginScreenState extends State<LogInScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                     Text(
                       StringConstText.newAccount,
                       style: const TextStyle(color: Colors.white),
                     ),
@@ -160,10 +159,9 @@ class LoginScreenState extends State<LogInScreen> {
                               builder: (context) => const SignUpScreen(),
                             ));
                       },
-                      child: Text(
+                      child:  Text(
                         StringConstText.signUpText,
-                        style: const TextStyle(
-                            color: ColorConst.buttonColor, fontSize: 16),
+                        style: const TextStyle(color: ColorConst.buttonColor, fontSize: 16),
                       ),
                     )
                   ],

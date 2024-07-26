@@ -39,15 +39,14 @@ class SignUpScreenState extends State<SignUpScreen> {
                   height: 20,
                 ),
                 TextFormField(
-                  cursorColor: ColorConst.corsourColor,
+                  cursorColor:ColorConst.corsourColor,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                       hintText: StringConstText.emailText,
                       hintStyle: const TextStyle(color: Colors.white),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
-                        borderSide:
-                            const BorderSide(color: ColorConst.textfilled),
+                        borderSide: const BorderSide(color: ColorConst.textfilled),
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(40))),
@@ -67,8 +66,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                       suffixIconColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
-                        borderSide:
-                            const BorderSide(color: ColorConst.textfilled),
+                        borderSide: const BorderSide(color: ColorConst.textfilled),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
@@ -84,9 +82,9 @@ class SignUpScreenState extends State<SignUpScreen> {
                     color: ColorConst.buttonColor,
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  child: Center(
+                  child:  Center(
                       child: Text(
-                    StringConstText.signUpButton,
+                        StringConstText.signUpButton,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -99,7 +97,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                     Text(
                       StringConstText.alreadyAccount,
                       style: const TextStyle(color: Colors.white),
                     ),
@@ -110,10 +108,9 @@ class SignUpScreenState extends State<SignUpScreen> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child:  Text(
                         StringConstText.loginText,
-                        style: const TextStyle(
-                            color: ColorConst.buttonColor, fontSize: 16),
+                        style: const TextStyle(color: ColorConst.buttonColor,fontSize: 16),
                       ),
                     )
                   ],

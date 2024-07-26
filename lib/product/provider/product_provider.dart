@@ -4,17 +4,17 @@ import 'package:fashion_wave/product/service/product_service.dart';
 import 'package:fashion_wave/product/ui/cart_item.dart';
 
 class ProductProvider with ChangeNotifier {
-  final ProductService productService = ProductService();
+  final ProductService _productService = ProductService();
 
-  List<ProductModel> products = [];
-  List<CartItem> cartItems = [];
-  List<ProductModel> favoriteProducts = [];
-  bool isLoading = true;
+  List<ProductModel> _products = [];
+  List<CartItem> _cartItems = [];
+  List<ProductModel> _favoriteProducts = [];
+  bool _isLoading = true;
 
-  List<ProductModel> get productss => products;
-  List<CartItem> get cartItemss => cartItems;
-  List<ProductModel> get favoriteProductss => favoriteProducts;
-  bool get isLoadings => isLoading;
+  List<ProductModel> get products => _products;
+  List<CartItem> get cartItems => _cartItems;
+  List<ProductModel> get favoriteProducts => _favoriteProducts;
+  bool get isLoading => _isLoading;
 
   ProductProvider() {
     fetchProducts();
@@ -22,23 +22,23 @@ class ProductProvider with ChangeNotifier {
 
   Future<void> fetchProducts() async {
     try {
-      products = await productService.fetchProducts();
-      print('Products loaded: ${products.length}');
+      _products = await _productService.fetchProducts();
+      print('Products loaded: ${_products.length}');
     } catch (e) {
       print('Error fetching products: $e');
     } finally {
-      isLoading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
 
   void addToCart(ProductModel product, int quantity) {
-    cartItems.add(CartItem(product: product, quantity: quantity, onDelete: () {  },));
+    _cartItems.add(CartItem(product: product, quantity: quantity, onDelete: () {  },));
     notifyListeners();
   }
 
   void removeFromCart(CartItem cartItem) {
-    cartItems.remove(cartItem);
+    _cartItems.remove(cartItem);
     notifyListeners();
   }
 
@@ -48,27 +48,27 @@ class ProductProvider with ChangeNotifier {
   }
 
   double get totalPrice {
-    return cartItems.fold(0, (sum, item) => sum + (item.product.price * item.quantity));
+    return _cartItems.fold(0, (sum, item) => sum + (item.product.price * item.quantity));
   }
 
   void clearCart() {
-    cartItems.clear();
+    _cartItems.clear();
     notifyListeners();
   }
 
   void addFavorite(ProductModel product) {
-    if (!favoriteProducts.contains(product)) {
-      favoriteProducts.add(product);
+    if (!_favoriteProducts.contains(product)) {
+      _favoriteProducts.add(product);
       notifyListeners();
     }
   }
 
   void removeFavorite(ProductModel product) {
-    favoriteProducts.remove(product);
+    _favoriteProducts.remove(product);
     notifyListeners();
   }
 
   bool isFavorite(ProductModel product) {
-    return favoriteProducts.contains(product);
+    return _favoriteProducts.contains(product);
   }
 }

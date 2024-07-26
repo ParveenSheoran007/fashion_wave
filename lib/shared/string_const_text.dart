@@ -36,8 +36,9 @@ class StringConstText{
   static String myprofile = 'My Profile';
    static String helpCenter = 'Help Center';
    static String changeLanguage = 'Change language';
-    static String wishListedProducts = 'Favourate Products';
-    static String myAddress = 'My Order';
+    static String wishListedProducts = 'WishListed Products';
+    static String myAddress = 'My Address';
+    static String myReview = 'My Reviews';
     static String setting = 'Setting';
     static String logOut = 'LogOut';
     static String alertdialog = 'Are you sure you want to log out?';
