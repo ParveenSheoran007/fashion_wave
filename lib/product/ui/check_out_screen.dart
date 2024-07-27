@@ -1,4 +1,5 @@
 import 'package:fashion_wave/product/ui/widget/my_address_screen.dart';
+import 'package:fashion_wave/shared/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -49,13 +50,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     List<String> products = cartItems
         .map((item) =>
-            '${item.product.name}: \$${(item.product.price * item.quantity).toStringAsFixed(2)} (Qty: ${item.quantity})')
+    '${item.product.name}: \$${(item.product.price * item.quantity)
+        .toStringAsFixed(2)} (Qty: ${item.quantity})')
         .toList();
 
     return Scaffold(
+      backgroundColor: ColorConst.BackGroundColor,
       appBar: AppBar(
+          backgroundColor: ColorConst.appBarColor,
         title: const Text('Checkout'),
-        backgroundColor: Colors.grey.shade100,
       ),
       body: SafeArea(
         child: Padding(
@@ -65,7 +68,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             children: [
               Text(
                 'Order Summary',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline6,
               ),
               const SizedBox(height: 16),
               Expanded(
@@ -77,7 +83,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       title: Text(cartItem.product.name),
                       subtitle: Text('Quantity: ${cartItem.quantity}'),
                       trailing: Text(
-                          '\$${(cartItem.product.price * cartItem.quantity).toStringAsFixed(2)}'),
+                          '\$${(cartItem.product.price * cartItem.quantity)
+                              .toStringAsFixed(2) }'),
                     );
                   },
                 ),
@@ -91,32 +98,53 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 'Shipping Information',
               ),
               const SizedBox(height: 8),
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Full Name',
-                  border: OutlineInputBorder(),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ColorConst.textfilled
+                ),
+                child: TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    labelText: '  Full Name',
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
-              TextField(
-                controller: addressController,
-                decoration: const InputDecoration(
-                  labelText: 'Address',
-                  border: OutlineInputBorder(),
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorConst.textfilled
+                ),
+                child: TextField(
+                  controller: addressController,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    labelText: '  Address',
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
               Text(
-                'Payment Method',
-                style: Theme.of(context).textTheme.headline6,
+                '  Payment Method',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline6,
               ),
               const SizedBox(height: 8),
-              TextField(
-                controller: paymentMethodController,
-                decoration: const InputDecoration(
-                  labelText: 'Payment Method',
-                  border: OutlineInputBorder(),
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ColorConst.textfilled
+                ),
+                child: TextField(
+                  controller: paymentMethodController,
+                  decoration: const InputDecoration(
+                    labelText: '  Payment Method',
+                    border: InputBorder.none,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -129,49 +157,51 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         paymentMethodController.text.isEmpty) {
                       showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Incomplete Information'),
-                          content: const Text(
-                              'Please fill in all the fields before proceeding.'),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('OK'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
+                        builder: (context) =>
+                            AlertDialog(
+                              title: const Text('Incomplete Information'),
+                              content: const Text(
+                                  'Please fill in all the fields before proceeding.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
                       );
                     } else {
                       await saveUserData(products);
                       showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Checkout'),
-                          content: const Text('Order placed successfully!'),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('Cancel'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: const Text('OK'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                productProvider.clearCart();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
+                        builder: (context) =>
+                            AlertDialog(
+                              title: const Text('Checkout'),
+                              content: const Text('Order placed successfully!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    productProvider.clearCart();
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
                                           const MyOrderScreen()),
-                                );
-                              },
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
                       );
                     }
                   },
